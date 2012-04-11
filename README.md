@@ -6,6 +6,7 @@ La intención de este repositorio es recojer todos los scripts o programas que p
 Hasta ahora, los métodos de conexión soportados son las siguientes:
 
 * **Bash** (previamente NetworkManager) es un script para GNU/Linux que puede configurarse para correr al iniciar sesión. Soporta notificaciones en Gnome, KDE o salida estandar.
+* **Android** es el proyecto de Eclipse de la aplicación para Android, disponible en [Google Play](about:blank). Requiere Android SDK r18 y Android Platform Tools r11.
 
 ##Aportando
 Conectarse a la red de la U desde fuera del navegador no es un proceso complicado, pero sí una tarea repetitiva que se puede automatizar. Si necesitas inspiración para un nuevo método solo revisa el código de otras implementaciones. Para aportar al proyecto, haz un fork del repositorio, agrega tu método en un directorio por separado que tenga el nombre de la plataforma o método utilizado y luego envía un Pull Request para agregarlo a la rama maestra.
