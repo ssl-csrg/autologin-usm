@@ -1,50 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="8dip">
+
+    <TextView
+        android:id="@+id/intro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/instructions"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:drawableTop="@drawable/autousm"
+        android:drawablePadding="8dip"
+        android:paddingBottom="8dip" />
 
     <EditText
-        android:id="@+id/usm_user"
-        android:layout_width="wrap_content"
+        android:id="@+id/username"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
         android:ems="10"
-        android:hint="usuario" >
-
-        <requestFocus />
-    </EditText>
+        android:hint="@string/user_hint"
+        android:inputType="text" />
 
     <EditText
-        android:id="@+id/usm_pass"
-        android:layout_width="wrap_content"
+        android:id="@+id/password"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/usm_user"
-        android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="password"
+        android:hint="@string/pass_hint"
         android:inputType="textPassword" />
 
     <CheckBox
-        android:id="@+id/checkBox1"
-        android:layout_width="wrap_content"
+        android:id="@+id/remember"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/usm_pass"
-        android:layout_alignRight="@+id/usm_pass"
-        android:layout_below="@+id/usm_pass"
-        android:checked="true"
-        android:gravity="center"
-        android:text="Recordarme" />
+        android:text="@string/remember" />
 
     <ToggleButton
-        android:id="@+id/toggleButton1"
-        android:layout_width="wrap_content"
+        android:id="@+id/connection"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox1"
-        android:layout_alignRight="@+id/checkBox1"
-        android:layout_below="@+id/checkBox1"
-        android:text="ToggleButton" />
+        android:textOff="@string/auto_connect"
+        android:textOn="@string/disconnect" />
 
-</RelativeLayout>
+</LinearLayout>

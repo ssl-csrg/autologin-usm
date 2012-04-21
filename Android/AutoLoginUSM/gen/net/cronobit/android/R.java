@@ -11,19 +11,28 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int autousm=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
     }
     public static final class id {
-        public static final int checkBox1=0x7f050002;
-        public static final int toggleButton1=0x7f050003;
-        public static final int usm_pass=0x7f050001;
-        public static final int usm_user=0x7f050000;
+        public static final int connection=0x7f050004;
+        public static final int intro=0x7f050000;
+        public static final int password=0x7f050002;
+        public static final int remember=0x7f050003;
+        public static final int username=0x7f050001;
     }
     public static final class layout {
         public static final int main=0x7f030000;
     }
     public static final class string {
-        public static final int app_name=0x7f040001;
-        public static final int hello=0x7f040000;
+        public static final int app_name=0x7f040000;
+        public static final int auto_connect=0x7f040005;
+        public static final int disconnect=0x7f040006;
+        public static final int error=0x7f040008;
+        public static final int instructions=0x7f040001;
+        public static final int pass_hint=0x7f040003;
+        public static final int remember=0x7f040004;
+        public static final int success=0x7f040007;
+        public static final int user_hint=0x7f040002;
     }
 }

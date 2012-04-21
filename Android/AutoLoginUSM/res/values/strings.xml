@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, AutoLoginUSMActivity!</string>
-    <string name="app_name">AutoLoginUSM</string>
+    <string name="app_name">AutoLogin USM</string>
+    <string name="instructions">
+    	Ingresa tu información de inicio de sesión en la red USM. Esto
+    	será válido para todas las redes iniciadas en "usm_"
+    </string>
+    <string name="user_hint">Nombre de Usuario</string>
+    <string name="pass_hint">Contraseña</string>
+    <string name="remember">Recordar Información</string>
+    <string name="auto_connect">Auto-Conectar</string>
+    <string name="disconnect">Desconectar</string>
+    <string name="success">Conectado con éxito a la red USM</string>
+    <string name="error">Ocurrió un error conectando a la red…</string>
 
 </resources>
