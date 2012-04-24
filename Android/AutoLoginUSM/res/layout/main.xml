@@ -3,17 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dip">
-
-    <TextView
-        android:id="@+id/intro"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/instructions"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:drawableTop="@drawable/autousm"
-        android:drawablePadding="8dip"
-        android:paddingBottom="8dip" />
+    android:padding="8dip"
+    >
 
     <EditText
         android:id="@+id/username"
