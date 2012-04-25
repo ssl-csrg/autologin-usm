@@ -6,7 +6,8 @@
 
 # Dependencias:
 #	* bash
-#	* iwconfig
+#	* wireles_tools
+
 # Opcionales:
 #	* zenity (GNOME)
 #	* kdialog (KDE)
@@ -21,6 +22,7 @@
 
 USM_USER=""
 USM_PASS=""
+USM_DOMAIN="alumnos" #Cambialo a "sansanos" si fuese necesario.
 
 DI_USER=""
 DI_PASS=""
@@ -32,13 +34,13 @@ WLAN="wlan0"
 # no dudes en compartirla :)
 
 # Obtiene el SSID de la red...
-CURRENT_SSID=`iwconfig $WLAN | grep ESSID | cut -d : -f 2 | cut -d \" -f 2`
+CURRENT_SSID=`iwgetid $WLAN | grep SSID | cut -d : -f 2 | cut -d \" -f 2`
 
 # Espera hasta 30 segundos que la red esté lista...
 COUNT=0
 MAX_COUNT=10
 PING=$(ping -c1 google.com | awk '/data/ {print $7}')
-while [ "$CURRENT_SSID" != "off/any" ] && [ "$PING" != "data." ]&& [ $COUNT -lt 10 ]
+while [ "$CURRENT_SSID" != "off/any" ] && [ "$PING" != "data." ] && [ $COUNT -lt $MAX_COUNT ]
 do	
 	sleep 3
 	CURRENT_SSID=`iwconfig $WLAN | grep ESSID | cut -d : -f 2 | cut -d \" -f 2`
@@ -47,20 +49,20 @@ do
 done
 
 # Evalúa el estado de la conexión y luego envia la información de inicio de sesión.
-if [ $COUNT -eq 10 ]
+if [ $COUNT -eq $MAX_COUNT ]
 then
 	USM_NET=0
 else
 	if [ `echo $CURRENT_SSID | grep usm_` ]
 	then
 		USM_NET=1
-		curl --silent --insecure -d username=$USM_USER%40alumnos.usm.cl -d password=$USM_PASS -d buttonClicked=4 https://1.1.1.1/login.html > /dev/null	
+		curl --silent --insecure -d username=$USM_USER%40$USM_DOMAIN.usm.cl -d password=$USM_PASS -d buttonClicked=4 https://1.1.1.1/login.html > /dev/null	
 	# Esta parte aún no funciona, pero está aquí para demostrar el concepto
 	# hasta que pueda descubrir como pasar por el formulario del DI.
-	elif [ "$CURRENT_SSID" == "di" ]
-	then
-		USM_NET=2
-		curl --silent -d auth_user=$DI_USER -d auth_pass=$DI_PASS http://10.6.43.2:8000/ > /dev/null
+	#elif [ "$CURRENT_SSID" == "di" ]
+	#then
+	#	USM_NET=2
+	#	curl --silent -d auth_user=$DI_USER -d auth_pass=$DI_PASS -d http://10.6.43.2:8000/ > /dev/null
 	else
 		USM_NET=3
 	fi
@@ -78,11 +80,15 @@ case $USM_NET in
 	USM_MESSAGE="Ocurrió un error conectando a la red";;
 esac
 
+# Revisa que tipo de escritorio se está usando
+IS_GNOME=$(ps aux | grep -c gnome-session)
+IS_KDE=$(ps aux | grep -c ksmserver)
+
 # Muestra una notificación por pantalla
-if [ "$DESKTOP_SESSION" = "gnome" ] && type zenity > /dev/null
+if [ $IS_GNOME -gt 1 ] && type zenity > /dev/null
 then
 	zenity --notification --text="$USM_MESSAGE" --title="AutoLogin USM" &
-elif [ "$DESKTOP_SESSION" = "kde" ] && type kdialog > /dev/null
+elif [ $IS_KDE -gt 1 ] && type kdialog > /dev/null
 then
 	kdialog --passivepopup "$USM_MESSAGE" 5 --title="AutoLogin USM" &
 else
