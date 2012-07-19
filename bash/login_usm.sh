@@ -33,18 +33,25 @@ WLAN="wlan0"
 # no dudes en compartirla :)
 
 # Obtiene el SSID de la red...
-CURRENT_SSID=`iwgetid $WLAN | grep SSID | cut -d : -f 2 | cut -d \" -f 2`
+#espera a que esté conectado al wifi
+CURRENT_SSID="off/any"
+while [ "$CURRENT_SSID" == "off/any" ]
+do
+    CURRENT_SSID=`iwconfig $WLAN | grep ESSID | cut -d : -f 2 | cut -d \" -f 2`
+done
 
 # Espera hasta 30 segundos que la red esté lista...
 COUNT=0
 MAX_COUNT=10
-PING=$(ping -c1 google.com | awk '/data/ {print $7}')
-while [ "$CURRENT_SSID" != "off/any" ] && [ "$PING" != "data." ] && [ $COUNT -lt $MAX_COUNT ]
-do	
-	sleep 3
-	CURRENT_SSID=`iwconfig $WLAN | grep ESSID | cut -d : -f 2 | cut -d \" -f 2`
-	PING=$(ping -c1 google.com | awk '/data/ {print $7}')
-	COUNT=$((COUNT+1))
+PING=""
+while [ "$PING" != "data." ] && [ $COUNT -lt $MAX_COUNT ]
+do
+    PING=$(ping -c1 google.com | awk '/data/ {print $7}')
+    if [ "$PING" != "data." ]
+    then
+        sleep 3
+        COUNT=$((COUNT+1))
+    fi
 done
 
 # Evalúa el estado de la conexión y luego envia la información de inicio de sesión.
