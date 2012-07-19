@@ -40,7 +40,7 @@ if [ "$IF" = "$WLAN" ] && [ "$STATUS" = "up" ]
 then
     #espera a que esté conectado al wifi
     CURRENT_SSID="off/any"
-    while [ "$CURRENT_SSID" == "off/any" ]
+    while [ "$CURRENT_SSID" = "off/any" ]
     do
         CURRENT_SSID=`iwconfig $WLAN | grep ESSID | cut -d : -f 2 | cut -d \" -f 2`
     done
@@ -58,6 +58,9 @@ then
 	        COUNT=$((COUNT+1))
 	    fi
     done
+elif [ "$STATUS" = "down" ]
+then
+    exit $?
 else
     USM_NET=0
 fi
