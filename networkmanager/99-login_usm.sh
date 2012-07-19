@@ -35,7 +35,6 @@ WLAN="wlan0"
 IF=$1
 STATUS=$2
 
-
 # Obtiene el SSID de la red...
 if [ "$IF" = "$WLAN" ] && [ "$STATUS" = "up" ]
 then
@@ -91,8 +90,6 @@ case $USM_NET in
 	USM_MESSAGE="Ingresaste con éxito a la red del DI";;
 3)
 	USM_MESSAGE="La red inalámbrica no es USM";;
-4)
-    USM_MESSAGE="No has completado tu información de usuario";;
 0)
 	USM_MESSAGE="Ocurrió un error conectando a la red";;
 esac
