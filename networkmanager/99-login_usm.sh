@@ -5,16 +5,15 @@
 # github.com/ssl-csrg/AutoLoginUSM
 
 # Dependencias:
-#	* bash
-#	* wireles_tools
+#	* networkmanager
 
 # Opcionales:
 #   * libnotify
 
 # Ejecución Automática:
-# Incluye la ruta hacia el script a tu archivo de inicio de sesión,
-# ya sea ~/.bashrc, ~/.xsession, ~/.kde/Autostart, etc.
-# En el caso de GNOME, debes usar la utilidad gnome-session-properties
+# Copia este script a la carpeta dispatcher.d de NetworkManager
+# usualmente en la siguiente ruta: /etc/NetworkManager/dispatcher.d/
+# luego dale permisos de ejecución: $ sudo chmod u+x 99-login_usm.sh
 
 # IMPORTANTE
 # Completa esta información
@@ -32,27 +31,37 @@ WLAN="wlan0"
 # Si haces alguna modificación a partir de este punto, porfavor
 # no dudes en compartirla :)
 
-# Obtiene el SSID de la red...
-#espera a que esté conectado al wifi
-CURRENT_SSID="off/any"
-while [ "$CURRENT_SSID" == "off/any" ]
-do
-    CURRENT_SSID=`iwconfig $WLAN | grep ESSID | cut -d : -f 2 | cut -d \" -f 2`
-done
+# obteniendo las variables de dispatcher.d
+IF=$1
+STATUS=$2
 
-# Espera hasta 30 segundos que la red esté lista...
-COUNT=0
-MAX_COUNT=10
-PING=""
-while [ "$PING" != "data." ] && [ $COUNT -lt $MAX_COUNT ]
-do
-    PING=$(ping -c1 google.com | awk '/data/ {print $7}')
-    if [ "$PING" != "data." ]
-    then
-        sleep 3
-        COUNT=$((COUNT+1))
-    fi
-done
+
+# Obtiene el SSID de la red...
+if [ "$IF" = "$WLAN" ] && [ "$STATUS" = "up" ]
+then
+    #espera a que esté conectado al wifi
+    CURRENT_SSID="off/any"
+    while [ "$CURRENT_SSID" == "off/any" ]
+    do
+        CURRENT_SSID=`iwconfig $WLAN | grep ESSID | cut -d : -f 2 | cut -d \" -f 2`
+    done
+    
+    # Espera 30 segundos a que haya internet
+    COUNT=0
+    MAX_COUNT=10
+    PING=""
+    while [ "$PING" != "data." ] && [ $COUNT -lt $MAX_COUNT ]
+    do
+	    PING=$(ping -c1 google.com | awk '/data/ {print $7}')
+	    if [ "$PING" != "data." ]
+	    then
+	        sleep 3
+	        COUNT=$((COUNT+1))
+	    fi
+    done
+else
+    USM_NET=0
+fi
 
 # Evalúa el estado de la conexión y luego envia la información de inicio de sesión.
 if [ $COUNT -eq $MAX_COUNT ]
@@ -82,7 +91,9 @@ case $USM_NET in
 	USM_MESSAGE="Ingresaste con éxito a la red del DI";;
 3)
 	USM_MESSAGE="La red inalámbrica no es USM";;
-*)
+4)
+    USM_MESSAGE="No has completado tu información de usuario";;
+0)
 	USM_MESSAGE="Ocurrió un error conectando a la red";;
 esac
 
@@ -90,7 +101,18 @@ esac
 if type notify-send > /dev/null
 then
 # Muestra una notificación por pantalla
-    notify-send "LoginUSM" "$USM_MESSAGE"
+    #Obtiene la pantalla del servidor X"
+    if [ -z "$DISPLAY" ]
+    then
+        console=`fgconsole`
+        dispnum=`ps t tty$console | sed -n -re 's,.*/X(org)? .*:([0-9]+).*,\2,p'`
+        export DISPLAY=":$dispnum"
+    fi
+    #Obtiene el usuario de esa pantalla
+    GUI_user="$( who | grep ' tty' | grep $DISPLAY | cut -d ' ' -f 1 )"
+    
+    #Envia la notificación a través de ese usuario
+    su $GUI_user -c "notify-send \"LoginUSM\" \"$USM_MESSAGE\" -t 5000"
 else
     echo $USM_MESSAGE
 fi
