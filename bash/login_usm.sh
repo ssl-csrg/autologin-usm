@@ -9,8 +9,7 @@
 #	* wireles_tools
 
 # Opcionales:
-#	* zenity (GNOME)
-#	* kdialog (KDE)
+#   * libnotify
 
 # Ejecución Automática:
 # Incluye la ruta hacia el script a tu archivo de inicio de sesión,
@@ -80,18 +79,12 @@ case $USM_NET in
 	USM_MESSAGE="Ocurrió un error conectando a la red";;
 esac
 
-# Revisa que tipo de escritorio se está usando
-IS_GNOME=$(ps aux | grep -c gnome-session)
-IS_KDE=$(ps aux | grep -c ksmserver)
-
+# Revisa si existe libnotify
+if type notify-send > /dev/null
+then
 # Muestra una notificación por pantalla
-if [ $IS_GNOME -gt 1 ] && type zenity > /dev/null
-then
-	zenity --notification --text="$USM_MESSAGE" --title="AutoLogin USM" &
-elif [ $IS_KDE -gt 1 ] && type kdialog > /dev/null
-then
-	kdialog --passivepopup "$USM_MESSAGE" 5 --title="AutoLogin USM" &
+    notify-send "LoginUSM" "$USM_MESSAGE"
 else
-	echo $USM_MESSAGE
+    echo $USM_MESSAGE
 fi
 
