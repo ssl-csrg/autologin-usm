@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Auto Login UTFSM by ssl-csrg</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Auto Login UTFSM</h1>
+        <p>Scripts para automatizar el ingreso a la red de UTFSM.</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/ssl-csrg/autologin-usm" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/ssl-csrg/autologin-usm/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/ssl-csrg/autologin-usm/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>Auto Login USM</h1>
+
+<p>Una colección de utilidades para implementar autenticación automática en las redes de la Universidad Técnica Federico Santa María.</p>
+
+<p>Este proyecto ahora forma parte de <a href="http://ssl.csrg.cl/">Sansanos por el Software Libre</a>.</p>
+
+<h2>Proyecto</h2>
+
+<p>La intención de este repositorio es recojer todos los scripts o programas que permitan autenticación automática en la USM, independientes del sistema operativo, de la plataforma o método de conexión.</p>
+
+<h2>Scripts</h2>
+
+<p>Hasta ahora, los métodos de conexión soportados son las siguientes:</p>
+
+<h3>GNU/Linux</h3>
+
+<ul>
+<li><p><strong>Bash</strong> es un script para GNU/Linux que puede configurarse para correr al iniciar sesión. Soporta notificaciones de escritorio a través de libnotify o salida estandar.</p></li>
+<li><p><strong>NetworkManager</strong> es para aquellos que utilizan NetworkManager como administrador de conexiones inalámbricas. A diferencia del script de Bash, este saca ventaja del NetworkManager Dispatcher y puede correr cuando se realiza una conexión, en vez de cuando se inicia una sesión.</p></li>
+</ul><p>Ambos scripts pueden convivir. Revisa el código de cada uno para las instrucciones sobre como instalarlos.</p>
+
+<h2>Aportando</h2>
+
+<p>Conectarse a la red de la U desde fuera del navegador no es un proceso complicado, pero sí una tarea repetitiva que se puede automatizar. Si necesitas inspiración para un nuevo método solo revisa el código de otras implementaciones. Para aportar al proyecto, haz un fork del repositorio, agrega tu método en un directorio por separado que tenga el nombre de la plataforma o método utilizado y luego envía un Pull Request para agregarlo a la rama maestra.</p>
+
+<h2>Agradecimientos</h2>
+
+<p>A <a href="https://github.com/camitox">camitox</a> por escribir la <a href="https://github.com/camitox/USM-Login-iPhone">aplicación para iPhone</a> que fue en parte lo que inspiró este proyecto.</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/ssl-csrg">ssl-csrg</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-31076629-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
